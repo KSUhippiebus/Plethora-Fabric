@@ -79,16 +79,15 @@ class NeuralInterfaceItem(settings: Settings?) : TrinketItem(settings), ICompute
   }
 
   override fun useOnEntity(stack: ItemStack?, user: PlayerEntity?, entity: LivingEntity?, hand: Hand?): ActionResult {
-    return if (!entity!!.isPlayer) {
-      if (!entity.world.isClient) {
-        if (!equipItem(entity, stack)) {
-          return ActionResult.FAIL;
+    if (entity != null) {
+        if (!entity.world.isClient) {
+            if (!equipItem(entity, stack)) {
+                return ActionResult.FAIL
+            }
         }
-      }
-      ActionResult.success(!entity.world.isClient)
-    } else {
-      ActionResult.FAIL
+        return ActionResult.success(!entity.world.isClient)
     }
+    return ActionResult.FAIL
   }
 
   companion object {
